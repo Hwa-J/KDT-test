@@ -12,10 +12,18 @@ import todo from './routes/todo'
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: [ // whiteList
+    'https://localhost:3000', 
+    'kdt-test-465e8.web.app',
+    'kdt-test-465e8.firebaseapp.com'
+  ]
+}))
 app.use('/todo', todo)
 
-export const api = functions.https.onRequest(app)
+export const api = functions
+.region('asia-northeast3')
+.https.onRequest(app)
 // https://localhost:5001/kdt-test-465e8/asia-northeast3/api/todo
 // https://asia-northeast3/kdt-test-465e8/api/todo
 

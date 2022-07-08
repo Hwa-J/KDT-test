@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 import * as FileType from 'file-type'
 
 // 스토리지에 파일 저장
-export async function saveFile(base64: string, bucketName = 'images') {
+export async function saveFile(base64: string, bucketName = 'kdt-test-465e8-images') {
   const bucket = admin.storage().bucket(bucketName) // bucket은 1차원적으로 폴더로 이해하기
 
 // if (!validator.isBase64(base64)) {
@@ -20,7 +20,7 @@ export async function saveFile(base64: string, bucketName = 'images') {
 
   const { ext } = await FileType.fromBuffer(buffer) as { ext: string }
   const allowTypes = ['jpg', 'png', 'webp']
-  if (allowTypes.includes(ext)) {
+  if (!allowTypes.includes(ext)) {
     throw { status: 400, message: '유효한 타입이 아닙니다!' }
   }
 
